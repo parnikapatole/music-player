@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RADIO AVA - Persian Music Portal</title>
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background decorative glowing spots -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- BORDERLESS APP CONTAINER (Clean Web Layout, No Mobile Phone Bezels) -->
+  <div class="app-viewport">
+    
+    <!-- SCREEN 1: SPLASH SCREEN -->
+    <div class="screen-content splash-layout active" id="screen-splash">
+      <!-- Interactive background visuals -->
+      <canvas id="splash-bg-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; border-radius: 28px;"></canvas>
+
+      <!-- Floating Music Notes -->
+      <div class="music-note note-1">♪</div>
+      <div class="music-note note-2">♫</div>
+      <div class="music-note note-3">♩</div>
+      <div class="music-note note-4">♬</div>
+      
+      <!-- Concentric Background Wave Arcs -->
+      <div class="arc-decor arc-1"></div>
+      <div class="arc-decor arc-2"></div>
+      <div class="arc-decor arc-3"></div>
+
+      <div class="splash-center">
+        <div class="logo-outer-glow">
+          <div class="logo-gradient-circle">
+            <!-- Radio Ava Smiley Face SVG -->
+            <svg class="smiley-logo-svg" viewBox="0 0 100 100">
+              <path d="M 30,50 A 20,20 0 0,1 70,50" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" />
+              <circle cx="50" cy="20" r="4" fill="white" />
+              <line x1="50" y1="20" x2="50" y2="30" stroke="white" stroke-width="3" />
+              <rect x="22" y="32" width="56" height="42" rx="20" fill="white" />
+              <path d="M 36,48 A 6,6 0 0,0 46,48" fill="none" stroke="#fd3c76" stroke-width="4" stroke-linecap="round" />
+              <path d="M 54,48 A 6,6 0 0,0 64,48" fill="none" stroke="#fd3c76" stroke-width="4" stroke-linecap="round" />
+              <path d="M 40,58 Q 50,68 60,58" fill="none" stroke="#fd3c76" stroke-width="4" stroke-linecap="round" />
+              <circle cx="31" cy="56" r="3" fill="#ff8080" opacity="0.6" />
+              <circle cx="69" cy="56" r="3" fill="#ff8080" opacity="0.6" />
+            </svg>
+          </div>
+        </div>
+        <h1 class="logo-title">RADIO AVA</h1>
+        <p class="logo-subtitle">Persian Music Portal</p>
+      </div>
+      
+      <button class="btn-splash-enter" onclick="switchScreen('home')">
+        Start Listening
+        <svg class="arrow-icon" viewBox="0 0 24 24" width="16" height="16">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- SCREEN 2: HOME SCREEN -->
+    <div class="screen-content home-layout" id="screen-home">
+      
+      <!-- Header -->
+      <header class="home-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="welcome-box">
+          <span class="welcome-text">Welcome To</span>
+          <span class="brand-text">RADIO AVA</span>
+        </div>
+        <button class="btn-icon theme-toggle-btn" onclick="toggleThemePanel()" style="background: rgba(255,255,255,0.04); border: var(--glass-border); width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: var(--text-white);">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <path d="M2 12h20"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Hot Music Section -->
+      <div class="hot-music-section">
+        <div class="section-title-row">
+          <h2 class="section-title">My Folder Songs</h2>
+        </div>
+
+        <div class="hot-list-vertical" id="hot-list-container">
+          <!-- Dynamically populated folder tracks -->
+        </div>
+      </div>
+
+      <!-- Mini Music Player Bar -->
+      <div class="mini-player-bar" id="mini-player" onclick="switchScreen('player')">
+        <div class="mini-player-content">
+          <div class="mini-album-art" id="mini-art"></div>
+          <div class="mini-track-info">
+            <span class="mini-title" id="mini-title">song 1</span>
+            <span class="mini-artist" id="mini-artist">Local Audio</span>
+          </div>
+          <div class="mini-controls" onclick="event.stopPropagation()">
+            <button class="mini-play-btn" id="mini-play-btn" onclick="togglePlayPause()">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" id="mini-play-svg"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="mini-progress-bg">
+          <div class="mini-progress-bar" id="mini-progress"></div>
+        </div>
+      </div>
+
+      <!-- CLEAN 3-ICON BOTTOM NAVIGATION -->
+      <nav class="bottom-nav">
+        <!-- Tab 1: Home -->
+        <button class="nav-item active" onclick="switchScreen('home')" id="nav-home">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+        </button>
+
+        <!-- Tab 2: Playlist -->
+        <button class="nav-item" onclick="switchScreen('player')" id="nav-playlist">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </button>
+
+        <!-- Tab 3: Saved Music -->
+        <button class="nav-item" id="nav-saved-home" onclick="switchScreen('saved')">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- SCREEN 4: SAVED/LIKED SONGS SCREEN -->
+    <div class="screen-content home-layout" id="screen-saved">
+      <!-- Header -->
+      <header class="home-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div class="welcome-box">
+          <span class="welcome-text">Your Library</span>
+          <span class="brand-text">Liked Songs</span>
+        </div>
+        <button class="btn-icon theme-toggle-btn" onclick="toggleThemePanel()" style="background: rgba(255,255,255,0.04); border: var(--glass-border); width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; color: var(--text-white);">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            <path d="M2 12h20"/>
+          </svg>
+        </button>
+      </header>
+
+      <!-- Hot Music Section -->
+      <div class="hot-music-section">
+        <div class="hot-list-vertical" id="saved-list-container">
+          <!-- Dynamically populated liked tracks -->
+        </div>
+      </div>
+
+      <!-- Duplicated Mini Music Player Bar (Synced via JS) -->
+      <div class="mini-player-bar" id="mini-player-saved" onclick="switchScreen('player')" style="display: none;">
+        <div class="mini-player-content">
+          <div class="mini-album-art" id="mini-art-saved"></div>
+          <div class="mini-track-info">
+            <span class="mini-title" id="mini-title-saved">song 1</span>
+            <span class="mini-artist" id="mini-artist-saved">Local Audio</span>
+          </div>
+          <div class="mini-controls" onclick="event.stopPropagation()">
+            <button class="mini-play-btn" id="mini-play-btn-saved" onclick="togglePlayPause()">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3" id="mini-play-svg-saved"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="mini-progress-bg">
+          <div class="mini-progress-bar" id="mini-progress-saved"></div>
+        </div>
+      </div>
+
+      <!-- Duplicated Bottom Navigation -->
+      <nav class="bottom-nav">
+        <!-- Tab 1: Home -->
+        <button class="nav-item" onclick="switchScreen('home')" id="nav-home-saved">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+          </svg>
+        </button>
+
+        <!-- Tab 2: Playlist -->
+        <button class="nav-item" onclick="switchScreen('player')" id="nav-playlist-saved">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"/>
+            <circle cx="6" cy="18" r="3"/>
+            <circle cx="18" cy="16" r="3"/>
+          </svg>
+        </button>
+
+        <!-- Tab 3: Saved Music -->
+        <button class="nav-item active" id="nav-saved-saved" onclick="switchScreen('saved')">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+
+    <!-- SCREEN 3: PLAYER SCREEN -->
+    <div class="screen-content player-layout" id="screen-player">
+      
+      <!-- Header -->
+      <header class="player-header">
+        <button class="btn-icon-back" onclick="switchScreen('home')">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="header-right">
+          <button class="btn-icon theme-toggle-btn" onclick="toggleThemePanel()" style="margin-right: 2px;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              <path d="M2 12h20"/>
+            </svg>
+          </button>
+          <button class="btn-icon" onclick="shareTrack()">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+              <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+              <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2" fill="none"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="2"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="2"/>
+            </svg>
+          </button>
+          <button class="btn-icon" onclick="showMoreOptions()">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <circle cx="12" cy="5" r="2" fill="currentColor"/>
+              <circle cx="12" cy="12" r="2" fill="currentColor"/>
+              <circle cx="12" cy="19" r="2" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic Circular Rotating Disc Player -->
+      <div class="circular-player-container">
+        <div class="disc-glow-bg"></div>
+        
+        <div class="circular-track-svg-wrapper">
+          <svg class="circular-svg" viewBox="0 0 200 200">
+            <circle class="ring-bg" cx="100" cy="100" r="85" />
+            <circle class="ring-progress" id="circular-progress-bar" cx="100" cy="100" r="85" stroke-dasharray="534" stroke-dashoffset="534" />
+          </svg>
+
+          <!-- Volume buttons -->
+          <button class="vol-btn vol-mute" onclick="adjustVolumeLevel(0)">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+              <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="vol-btn vol-up" onclick="adjustVolumeLevel(1)">
+            <svg viewBox="0 0 24 24" width="14" height="14">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" fill="currentColor"/>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </button>
+
+          <!-- Circular thumb -->
+          <div class="circular-thumb" id="progress-thumb"></div>
+        </div>
+
+        <!-- Rotating Album Disc Vinyl -->
+        <div class="rotating-album-disc-wrapper">
+          <div class="album-disc" id="player-album-disc">
+            <div class="album-vinyl-grooves"></div>
+            <div class="album-center-img" id="player-album-art"></div>
+          </div>
+          <!-- Stationary Wave overlay so it doesn't spin with the vinyl -->
+          <div id="stationary-wave-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; pointer-events: none; z-index: 10;"></div>
+        </div>
+      </div>
+
+      <!-- Track details -->
+      <div class="track-details-block">
+        <div class="play-stats">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" style="margin-right: 4px; opacity: 0.6;">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <span id="player-play-count">Folder File</span>
+        </div>
+        
+        <h2 class="track-title" id="player-track-title">song 1</h2>
+        <p class="artist-name" id="player-artist-name">Local Audio</p>
+
+        <div class="track-utility-row">
+          <button class="util-btn" onclick="downloadTrack()">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="util-btn" onclick="addToPlaylist()">
+            <svg viewBox="0 0 24 24" width="20" height="20">
+              <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="util-btn favorite-btn" id="player-fav-btn" onclick="toggleFavorite()">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Waveform Visualizer -->
+      <div class="waveform-container">
+        <div class="waveform-bars" id="waveform-visualizer">
+          <!-- Bars populated via JS -->
+        </div>
+        <div class="time-display">
+          <span id="current-time">00:00</span>
+          <span class="time-divider">/</span>
+          <span id="total-duration">00:00</span>
+        </div>
+      </div>
+
+      <!-- Main Controls -->
+      <div class="playback-controls">
+        <button class="control-btn" onclick="prevTrack()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <polygon points="19 20 9 12 19 4 19 20"/>
+            <line x1="5" y1="4" x2="5" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </button>
+        
+        <div class="play-btn-glow">
+          <button class="btn-play-pause playing" id="player-play-btn" onclick="togglePlayPause()">
+            <svg class="play-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"/>
+            </svg>
+            <svg class="pause-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display:none;">
+              <rect x="6" y="4" width="4" height="16"/>
+              <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+          </button>
+        </div>
+
+        <button class="control-btn" onclick="nextTrack()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <polygon points="5 4 15 12 5 20 5 4"/>
+            <line x1="19" y1="4" x2="19" y2="20" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Extra Player Utility Bar -->
+      <footer class="player-utilities">
+        <!-- Interactive Lyrics Button (FAR LEFT) -->
+        <button class="tiny-btn" id="btn-lyrics" onclick="toggleLyricsPanel()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            <path d="M8 7h8M8 11h8"/>
+          </svg>
+        </button>
+        
+        <button class="tiny-btn active-util" id="btn-repeat" onclick="toggleRepeatMode()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 1l4 4-4 4"/>
+            <path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/>
+            <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+          </svg>
+        </button>
+        <button class="tiny-btn" id="btn-shuffle" onclick="toggleShuffleMode()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+          </svg>
+        </button>
+        
+        <button class="tiny-btn" onclick="showQueuePanel()">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6" stroke-width="3"/>
+            <line x1="3" y1="12" x2="3.01" y2="12" stroke-width="3"/>
+            <line x1="3" y1="18" x2="3.01" y2="18" stroke-width="3"/>
+          </svg>
+        </button>
+      </footer>
+
+      <!-- Pull Up Bar -->
+      <div class="pull-up-indicator" onclick="toggleLyricsPanel()">
+        <div class="pull-up-arrow">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M18 15l-6-6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- INTERACTIVE SPOTIFY-STYLE SLIDE-UP LYRICS PANEL -->
+      <div class="lyrics-panel" id="lyrics-panel">
+        <div class="lyrics-header">
+          <h3 class="lyrics-title-text">Lyrics</h3>
+          <button class="btn-close-lyrics" onclick="toggleLyricsPanel()">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="lyrics-scroll-container" id="lyrics-text-container">
+          <!-- Dynamic timed lyrics scroll lines drawn via JS -->
+        </div>
+      </div>
+
+      <!-- INTERACTIVE QUEUE PANEL -->
+      <div class="queue-panel" id="queue-panel">
+        <div class="queue-header">
+          <h3 class="queue-title-text">Play Queue</h3>
+          <button class="btn-close-queue" onclick="toggleQueuePanel()">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 6L6 18M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <div class="queue-scroll-container" id="queue-list-container">
+          <!-- Dynamic queue list drawn via JS -->
+        </div>
+      </div>
+
+      <!-- Premium Toast Notifications Container -->
+      <div class="toast-container" id="toast-container"></div>
+
+    </div>
+
+    <!-- INTERACTIVE THEME SELECTION PANEL -->
+    <div class="theme-panel" id="theme-panel">
+      <div class="theme-list">
+        <div class="theme-item" onclick="setTheme('sunset')">
+          <div class="theme-preview sunset-preview"></div>
+          <span>Sunset</span>
+        </div>
+        <div class="theme-item" onclick="setTheme('cyberpunk')">
+          <div class="theme-preview cyberpunk-preview"></div>
+          <span>Cyberpunk</span>
+        </div>
+        <div class="theme-item" onclick="setTheme('oceanic')">
+          <div class="theme-preview oceanic-preview"></div>
+          <span>Oceanic</span>
+        </div>
+        <div class="theme-item" onclick="setTheme('mystic')">
+          <div class="theme-preview mystic-preview"></div>
+          <span>Mystic</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- HTML5 Audio Core element -->
+  <audio id="audio-engine"></audio>
+
+  <script src="app.js"></script>
+</body>
+</html>
